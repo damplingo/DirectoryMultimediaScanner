@@ -35,8 +35,7 @@ void TDirectoryScaner::IntervalScanner(int interval, const Nfs::path& path){
         }
         json report = ScanDirectory(path);
         if (WriteReport(report, ".media_files", path)) {
-            std::string filePath = "~/"+path.string()+"/.media_files";
-            std::cout<<"File update: "<<filePath<<'\n';
+            std::cout<<"File update"<<'\n';
             std::lock_guard<std::mutex> lock(report_mutex);
             latest_report_ = std::move(report);
         }
