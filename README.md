@@ -16,7 +16,7 @@
 Для сборки из корневой директории проекта:
 ```
 cmake -B build -S .
-cmake --build ./build -j(nproc)
+cmake --build ./build -j$(nproc)
 ```
 Запуск из корневой директории проекта:
 
