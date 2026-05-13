@@ -16,8 +16,10 @@ class TDirectoryScaner{
     std::unordered_set<std::string> Video = {".mpg", ".mp4", ".avi",  ".mkv", ".mov", ".wmv", ".flv", ".webm", ".m4v", 
         ".mpeg", ".3gp", ".3g2", ".ogv", ".ts", ".m2ts", ".vob"};
     std::unordered_set<std::string> Images = {".jpeg", ".png", ".svg",".jpg", ".heic", ".avif", ".bmp"};
+    json latest_report_;
     public:
     json ScanDirectory(const Nfs::path& path);
     bool WriteReport(const json& info, const std::string& relativePath, const Nfs::path& directory);
     void IntervalScanner(int interval, const Nfs::path& path);
+    json GetLatestReport() const; 
 };

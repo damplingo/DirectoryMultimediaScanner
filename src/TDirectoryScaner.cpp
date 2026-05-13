@@ -10,6 +10,16 @@
 #include <fstream>
 #include <chrono>
 #include <thread>
+#include <mutex>
+
+namespace {
+    std::mutex report_mutex;  
+}
+
+json TDirectoryScaner::GetLatestReport() const {
+    std::lock_guard<std::mutex> lock(report_mutex);
+    return latest_report_;
+}
 
 void TDirectoryScaner::IntervalScanner(int interval, const Nfs::path& path){
 
@@ -27,6 +37,8 @@ void TDirectoryScaner::IntervalScanner(int interval, const Nfs::path& path){
         if (WriteReport(report, ".media_files", path)) {
             std::string filePath = "~/"+path.string()+"/.media_files";
             std::cout<<"File update: "<<filePath<<'\n';
+            std::lock_guard<std::mutex> lock(report_mutex);
+            latest_report_ = std::move(report);
         }
         
         std::this_thread::sleep_for(std::chrono::seconds(interval));

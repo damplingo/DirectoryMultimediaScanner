@@ -1,7 +1,14 @@
 # DirectoryMultimediaScaner
 
 ## Назначение
-Данное приложение предназначено для анализа рабочей директории на предмет наличия мультимедийных файлов. Собранную информацию о мультимедиа файлов утилита сохраняет в формате json в файл .media_files
+
+Данное приложение предназначено для анализа рабочей директории на предмет наличия мультимедийных файлов. Собранная информация о файлах мультимедиа доступна по Get-запросу
+на адрес http://localhost:1234/media_files
+
+## Инструменты
+
+для написания http-сервера был использован фреймворк userver версии 2.6
+
 
 ## Сборка и запуск
 
@@ -9,23 +16,17 @@
 Для сборки из корневой директории проекта:
 ```
 cmake -B build -S .
-cmake --build build
+cmake --build ./build -j(nproc)
 ```
 Запуск из корневой директории проекта:
 
 ```
-./build/DirectoryMultimediaScanner *interval* *path*
+./build/DirectoryMultimediaScanner *interval* *path* --config configs/static_config.yaml
 ```
 *interval* - временной интервал в секундах
 *path* - путь к директории
 
 Например,
 ```
-./build/DirectoryMultimediaScanner 1 ~/pictures
+./build/DirectoryMultimediaScanner 1 ~/pictures --config configs/static_config.yaml
 ```
-
-Файл .media_files находится в папке, которую обработал сканер
-
-## Примечание
-
-если аргументы командной строки не введены, значения выбираются по умолчанию. Временной интервал по умолчанию 25 секунд, директория - домашняя.
